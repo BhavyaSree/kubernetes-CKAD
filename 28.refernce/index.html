@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Bhavya Sree Bindela">
+        <link rel="canonical" href="https://bhavyasree.github.io/Kubernetes-CKAD/28.refernce/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Points - Kubernetes-CKAD</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/obsidian.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Kubernetes-CKAD</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Getting started</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01.kubernetes-architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../02.imperative-commands/" class="dropdown-item">Imperative Commands</a>
+</li>
+                                    
+<li>
+    <a href="../03.formatting-output-with-kubectl/" class="dropdown-item">Output Format</a>
+</li>
+                                    
+<li>
+    <a href="../04.questions-1/" class="dropdown-item">Examples</a>
+</li>
+                                    
+<li>
+    <a href="../05.configuration-commands/" class="dropdown-item">Commands</a>
+</li>
+                                    
+<li>
+    <a href="../06.edit-pods-deploys/" class="dropdown-item">Edit POD & Deploy</a>
+</li>
+                                    
+<li>
+    <a href="../07.configuration-env/" class="dropdown-item">Env variables</a>
+</li>
+                                    
+<li>
+    <a href="../08.configMaps/" class="dropdown-item">ConfigMap</a>
+</li>
+                                    
+<li>
+    <a href="../09.secrets/" class="dropdown-item">Secret</a>
+</li>
+                                    
+<li>
+    <a href="../10.security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../11.kubernetes-security/" class="dropdown-item">K8-Security</a>
+</li>
+                                    
+<li>
+    <a href="../12.service-account/" class="dropdown-item">Service Account</a>
+</li>
+                                    
+<li>
+    <a href="../13.resource-requirements/" class="dropdown-item">Resources</a>
+</li>
+                                    
+<li>
+    <a href="../14.taints-tolerations/" class="dropdown-item">Taints & Tolerations</a>
+</li>
+                                    
+<li>
+    <a href="../15.node-selectors-affinity/" class="dropdown-item">NodeSelectors & Affinity</a>
+</li>
+                                    
+<li>
+    <a href="../16.taints%26tolerations-Vs-nodeaffinity/" class="dropdown-item">T&T/NodeAffinity</a>
+</li>
+                                    
+<li>
+    <a href="../17.multi-container-pods/" class="dropdown-item">MultiContainer pod</a>
+</li>
+                                    
+<li>
+    <a href="../18.readiness-liveness/" class="dropdown-item">Readiness-Liveliness</a>
+</li>
+                                    
+<li>
+    <a href="../19.container-logging/" class="dropdown-item">Logging</a>
+</li>
+                                    
+<li>
+    <a href="../20.monitoring/" class="dropdown-item">Monitoring</a>
+</li>
+                                    
+<li>
+    <a href="../21.labels-selectors-annotations/" class="dropdown-item">Selectors</a>
+</li>
+                                    
+<li>
+    <a href="../22.updates-rollbacks/" class="dropdown-item">Upgrades-Rollbacks</a>
+</li>
+                                    
+<li>
+    <a href="../23.jobs/" class="dropdown-item">Jobs</a>
+</li>
+                                    
+<li>
+    <a href="../24.services/" class="dropdown-item">Services</a>
+</li>
+                                    
+<li>
+    <a href="../25.Ingress/" class="dropdown-item">Ingress</a>
+</li>
+                                    
+<li>
+    <a href="../26.network-policies/" class="dropdown-item">Network Policy</a>
+</li>
+                                    
+<li>
+    <a href="../27.volumes/" class="dropdown-item">volumes</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Points</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../KodeKloud-Kubernetes%2B-CKAD.pdf" class="dropdown-item">Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../27.volumes/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../KodeKloud-Kubernetes%2B-CKAD.pdf" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/BhavyaSree/kubernetes-CKAD/edit/master/docs/28.refernce.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            
+            <li class="nav-item" data-level="2"><a href="#pods" class="nav-link">PODS</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#labels" class="nav-link">labels</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#configmaps" class="nav-link">configmaps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#secrets" class="nav-link">Secrets</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h3 id="persistent-volumes-and-persistent-volume-claims">Persistent volumes and persistent volume claims</h3>
+<p>To inorder to bind pvc with a pv, accessMode and storageClassName of both should be same.</p>
+<p>PV:</p>
+<pre><code class="yaml">spec:
+ hostPath:  
+   path:    
+</code></pre>
+
+<h2 id="pods">PODS</h2>
+<h2 id="labels">labels</h2>
+<p>show all the labels of pods <br />
+<code>kubectl get pods --show-labels</code>  </p>
+<p>Change the labels of pod 'nginx' to be app=v2<br />
+<code>kubectl label pod nginx app=v2 --overwrite</code>  </p>
+<p>Get the label 'app' for the pods<br />
+<code>kubectl get pods --label-columns=app</code>   </p>
+<p>Get only the 'app=v2' pods  <br />
+<code>kubectl get pods --selector=app=v2</code>  </p>
+<p>Remove the 'app' label from the nginx pod<br />
+<code>kubectl label pod nginx app-</code>  </p>
+<p>Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'<br />
+<code>First add the label to the node</code><br />
+<code>kubectl label node &lt;nodename&gt; accelerator=nvidia-tesla-p100</code> <br />
+<code>use the 'nodeSelector' property on the Pod YAML. under nodeSElector give the label.</code>  </p>
+<p>To know where to write nodeSelector in the yaml file. <br />
+<code>kubectl explain po.spec</code>  </p>
+<p>Annotate pod nginx with "description='my description'" value<br />
+<code>kubectl annotate pod nginx description='my description'</code>  </p>
+<p>check the annotations for pod nginx<br />
+<code>kubectl describe pod nginx | grep -i 'annotations'</code>  </p>
+<p>remove the annotation<br />
+<code>kubectl annotate pod description-</code>  </p>
+<p>check how the deployment rollout is going<br />
+<code>kubectl rollout status deploy &lt;deploymentname&gt;</code>  </p>
+<p>check the rollout history<br />
+<code>kubectl rollout history deploy &lt;deploymentname&gt;</code>  </p>
+<p>undo the latest rollout <br />
+<code>kubectl rollout undo deploy &lt;deploymentname&gt;</code>  </p>
+<p>Return the deployment to the second revision (number 2)<br />
+<code>kubectl rollout undo deploy &lt;deploymentname&gt; --to-revision=2</code>  </p>
+<p>Check the details of the fourth revision <br />
+<code>kubectl rollout history deploy &lt;deploymentname&gt;  --revision=4</code>  </p>
+<p>Autoscale the deployment, pods between 5 and 10, targetting CPU utilization at 80% <br />
+<code>kubectl autoscale deploy &lt;deploymentname&gt; --min=5 --max=10 --cpu-percent=80</code>  </p>
+<p>pause the rollout of the deployment<br />
+<code>kubectl rollout pause deploy &lt;deploymentname&gt;</code>  </p>
+<p>Create Horzontal pod autoscaler for deployment nginx that maintains between 1 and 10 replicas of the Pods, targetting CPU utilization at 80%<br />
+<code>kubectl autoscale deploy nginx --min=1 --max=10 --cpu-percent=80</code>  </p>
+<p>Delete the deployment and the horizontal pod autoscaler you created<br />
+<code>kubectl delete deploy nginx</code><br />
+<code>kubectl delete hpa nginx</code><br />
+or<br />
+<code>kubectl delete deploy/nginx hpa/nginx</code>  </p>
+<p>Create a job with image perl<br />
+<code>kubectl create job pi --image=perl</code>   </p>
+<p>Create a job with image perl that runs the command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"  <br />
+<code>kubectl create job pi  --image=perl -- perl -Mbignum=bpi -wle 'print bpi(2000)'</code>  </p>
+<p>Create a job but ensure that it will be automatically terminated by kubernetes if it takes more than 30 seconds to execute<br />
+<code>kubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10; done'</code><br />
+Add activeDeadlineSeconds=30 under job spec section in yaml file and create the job.  </p>
+<h2 id="configmaps">configmaps</h2>
+<p>from literals<br />
+<code>kubectl create cm map1 --from-literal=var1=val1</code>  </p>
+<p>from file<br />
+<code>echo -e 'var1=val1\nvar2=val2' &gt; config.txt</code> <br />
+<code>kuebctl create cm map2 --from-file=config.txt</code>  </p>
+<p>from env file <br />
+<code>echo -e 'var1=val1\nvar2=val2' &gt; config.env</code> <br />
+<code>kuebctl create cm map3 --from-file=config.env</code>  </p>
+<p>from a file, giving the key special<br />
+<code>kubectl create cm map4 --from-file=special=config.txt</code>  </p>
+<p>Create a configMap called 'options' with the value var5=val5. Create a new nginx pod that loads the value from variable 'var5' in an env variable called 'option'<br />
+<code>kubectl create cm options --from-literal=var5=val5</code><br />
+<code>kubectl run nginx --image=nginx --dry-run=client -o yaml &gt; pod.yaml</code><br />
+Add </p>
+<pre><code class="yaml">env:
+ - name: option
+   valueFrom:
+      configMapkeyRef:
+        name: options  
+        key: var5
+</code></pre>
+
+<p>under spec.containers  </p>
+<h2 id="secrets">Secrets</h2>
+<p>Create a secret with the values password=mypass<br />
+<code>kubectl create secret generic mysecret --from-literal=password=mypass</code>  </p>
+<p>from file<br />
+<code>kubectl create secret generic mysecret --from-file=finename</code>  </p>
+<p>To get the value of the secret<br />
+<code>echo &lt;data.username&gt; | base64 -D</code>   </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

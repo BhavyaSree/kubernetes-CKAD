@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Bhavya Sree Bindela">
+        <link rel="canonical" href="https://bhavyasree.github.io/Kubernetes-CKAD/24.services/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Services - Kubernetes-CKAD</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/obsidian.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Kubernetes-CKAD</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Getting started</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01.kubernetes-architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../02.imperative-commands/" class="dropdown-item">Imperative Commands</a>
+</li>
+                                    
+<li>
+    <a href="../03.formatting-output-with-kubectl/" class="dropdown-item">Output Format</a>
+</li>
+                                    
+<li>
+    <a href="../04.questions-1/" class="dropdown-item">Examples</a>
+</li>
+                                    
+<li>
+    <a href="../05.configuration-commands/" class="dropdown-item">Commands</a>
+</li>
+                                    
+<li>
+    <a href="../06.edit-pods-deploys/" class="dropdown-item">Edit POD & Deploy</a>
+</li>
+                                    
+<li>
+    <a href="../07.configuration-env/" class="dropdown-item">Env variables</a>
+</li>
+                                    
+<li>
+    <a href="../08.configMaps/" class="dropdown-item">ConfigMap</a>
+</li>
+                                    
+<li>
+    <a href="../09.secrets/" class="dropdown-item">Secret</a>
+</li>
+                                    
+<li>
+    <a href="../10.security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../11.kubernetes-security/" class="dropdown-item">K8-Security</a>
+</li>
+                                    
+<li>
+    <a href="../12.service-account/" class="dropdown-item">Service Account</a>
+</li>
+                                    
+<li>
+    <a href="../13.resource-requirements/" class="dropdown-item">Resources</a>
+</li>
+                                    
+<li>
+    <a href="../14.taints-tolerations/" class="dropdown-item">Taints & Tolerations</a>
+</li>
+                                    
+<li>
+    <a href="../15.node-selectors-affinity/" class="dropdown-item">NodeSelectors & Affinity</a>
+</li>
+                                    
+<li>
+    <a href="../16.taints%26tolerations-Vs-nodeaffinity/" class="dropdown-item">T&T/NodeAffinity</a>
+</li>
+                                    
+<li>
+    <a href="../17.multi-container-pods/" class="dropdown-item">MultiContainer pod</a>
+</li>
+                                    
+<li>
+    <a href="../18.readiness-liveness/" class="dropdown-item">Readiness-Liveliness</a>
+</li>
+                                    
+<li>
+    <a href="../19.container-logging/" class="dropdown-item">Logging</a>
+</li>
+                                    
+<li>
+    <a href="../20.monitoring/" class="dropdown-item">Monitoring</a>
+</li>
+                                    
+<li>
+    <a href="../21.labels-selectors-annotations/" class="dropdown-item">Selectors</a>
+</li>
+                                    
+<li>
+    <a href="../22.updates-rollbacks/" class="dropdown-item">Upgrades-Rollbacks</a>
+</li>
+                                    
+<li>
+    <a href="../23.jobs/" class="dropdown-item">Jobs</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Services</a>
+</li>
+                                    
+<li>
+    <a href="../25.Ingress/" class="dropdown-item">Ingress</a>
+</li>
+                                    
+<li>
+    <a href="../26.network-policies/" class="dropdown-item">Network Policy</a>
+</li>
+                                    
+<li>
+    <a href="../27.volumes/" class="dropdown-item">volumes</a>
+</li>
+                                    
+<li>
+    <a href="../28.refernce/" class="dropdown-item">Points</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../KodeKloud-Kubernetes%2B-CKAD.pdf" class="dropdown-item">Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../23.jobs/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../25.Ingress/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/BhavyaSree/kubernetes-CKAD/edit/master/docs/24.services.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#external-communication" class="nav-link">External communication</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#service-types" class="nav-link">Service Types</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#nodeport" class="nav-link">NodePort</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#clusterip" class="nav-link">ClusterIP</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#loadbalancer" class="nav-link">LoadBalancer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>Kubernetes servcies enable various communications between various components within and outside of the application.<br />
+Kubernetes servcies helps us to connect applications together and for the users.   </p>
+<p>For Example: Our appliaction has group of pods serving various functions such as a group serving for front end load to users, another group running backend processes and third group connecting external database. </p>
+<p>It is services that enable connectivity between these group of pods. Services enable the front end application made available to end users,  it helps in communicating backend and frontend pods and helps in connecting to external database.<br />
+Thus, servcies enable loose coupling between micro-services in our application.  </p>
+<h2 id="external-communication">External communication</h2>
+<p>We deployed a pod having web application running on it. How do we as an external user access the web page.  </p>
+<p><img alt="Services" src="../Screens/Services.png" /></p>
+<p>This type of service is called a NodePort Servcie, as service listens to a port on the node and forwards request to POD.</p>
+<h2 id="service-types">Service Types</h2>
+<h2 id="nodeport">NodePort</h2>
+<p>Nodeport Service makes internal POD accessible on a port on the node.  </p>
+<p>This servcie helps us by mapping a port on the POD to the port on the node.  </p>
+<p><img alt="Nodeport" src="../Screens/nodeport.png" /></p>
+<p>The port on the pod where an actual web server is running is 80 and it is referred to <code>target port</code> as this is the port where service forward the request to.  </p>
+<p>Second port is the port on the service itself. It is simple referred to <code>port</code>.<br />
+This terms are from the view point of the service.  </p>
+<p>Finally, we have the port on the node itself, which we use to access the webserver externally and that is known as the <code>nodeport</code>.
+Nodeport can only be in valid range i.e., 30000 to 32767.</p>
+<p><code>service-definition.yaml</code></p>
+<pre><code class="yaml">apiVersion: v1
+kind: Service
+metadata: 
+  name: myapp-service
+
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80 # will assumed to be same as port by default
+      port: 80  # only mandatory
+      nodePort: 30008 #if not provided, it will automatically assign the port in the valid range.
+  selector:
+  # to identify the pod
+    app: myapp
+    type: front-end
+</code></pre>
+
+<p>To create a service<br />
+<code>kubectl create -f servcie-definition.yaml</code>  </p>
+<p>To get all services<br />
+<code>kubectl get services</code>  </p>
+<p>To access the webservice  <code>curl http://&lt;NodeIp&gt;:&lt;nodePort&gt;</code>  <br />
+For Example: <code>curl http://192.168.1.2:30008</code>  </p>
+<p>When we have multiple PODs running our web application, they will have the same labels and when we create a service, it will consider all the pods with the particular label as target pods. We don't have to do any additional configuration to access multiple instances of a POD.<br />
+To balance the load across the multiple pods, it uses a random algorithm. Thus, service acts as a built-in load balancer to distribute load across different pods.  </p>
+<p>When the pods are distributed across multiple nodes, in this case a web application on PODs on separate nodes in the cluster.<br />
+When we create a service, without any additional configuration. The kubernets automatically creates a service that spans across all the nodes in the cluster and maps the targetport to the same nodePort on all the nodes in the cluster.<br />
+This way, we can access the application using the IP of any node in the cluster and using the same port number.  </p>
+<p>In any case, whether it can be a single pod on the single node, multiple pods on the single node or multiple pods on the multiple nodes, the service will be created exactly the same.<br />
+When the PODs are removed or added, the service gets automatically updated making it highly flexible and adoptive. Once created, we won't typically have to make any additional configuration changes.</p>
+<h2 id="clusterip">ClusterIP</h2>
+<p>In this case, servcie creates a virtual IP inside the cluster to enable communication between a set of servers such as a set of front end servers to a set of backend servers.  </p>
+<p>A service created for the backend pods will help to group all the backend pods together and provide a single interface for other pods to access the service. The requests are forwarded to one of the pods under the service.  </p>
+<p><img alt="clusterIP" src="../Screens/clusterip.png" /></p>
+<p><code>service-definition.yaml</code></p>
+<pre><code class="yaml">apiVersion: v1
+kind: Service
+metadata: 
+  name: back-end
+spec:
+  type: clusterIp
+  # clusterIP is the default type, if we didn't specify it, the service will automatically assumes it to be clusterIP.
+  ports:
+   - targetPort: 80 # where backend is exposed
+     port: 80 # where servcie is exposed
+  selector:
+  # to link the service to set of pods
+    app: myapp
+    type: back-end 
+</code></pre>
+
+<p>To create a service<br />
+<code>kubectl create -f servcie-definition.yaml</code>  </p>
+<p>To get all services<br />
+<code>kubectl get services</code> </p>
+<p>This service can be accessed by other pods using IP address or service name.  </p>
+<h2 id="loadbalancer">LoadBalancer</h2>
+<p>This service provisions a load balancer for our application in supported cloud providers.<br />
+For Example: To distribute load across the web servers in front end tier.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

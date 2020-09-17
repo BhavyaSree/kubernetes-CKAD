@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Bhavya Sree Bindela">
+        <link rel="canonical" href="https://bhavyasree.github.io/Kubernetes-CKAD/15.node-selectors-affinity/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>NodeSelectors & Affinity - Kubernetes-CKAD</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/obsidian.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Kubernetes-CKAD</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Getting started</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01.kubernetes-architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../02.imperative-commands/" class="dropdown-item">Imperative Commands</a>
+</li>
+                                    
+<li>
+    <a href="../03.formatting-output-with-kubectl/" class="dropdown-item">Output Format</a>
+</li>
+                                    
+<li>
+    <a href="../04.questions-1/" class="dropdown-item">Examples</a>
+</li>
+                                    
+<li>
+    <a href="../05.configuration-commands/" class="dropdown-item">Commands</a>
+</li>
+                                    
+<li>
+    <a href="../06.edit-pods-deploys/" class="dropdown-item">Edit POD & Deploy</a>
+</li>
+                                    
+<li>
+    <a href="../07.configuration-env/" class="dropdown-item">Env variables</a>
+</li>
+                                    
+<li>
+    <a href="../08.configMaps/" class="dropdown-item">ConfigMap</a>
+</li>
+                                    
+<li>
+    <a href="../09.secrets/" class="dropdown-item">Secret</a>
+</li>
+                                    
+<li>
+    <a href="../10.security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../11.kubernetes-security/" class="dropdown-item">K8-Security</a>
+</li>
+                                    
+<li>
+    <a href="../12.service-account/" class="dropdown-item">Service Account</a>
+</li>
+                                    
+<li>
+    <a href="../13.resource-requirements/" class="dropdown-item">Resources</a>
+</li>
+                                    
+<li>
+    <a href="../14.taints-tolerations/" class="dropdown-item">Taints & Tolerations</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">NodeSelectors & Affinity</a>
+</li>
+                                    
+<li>
+    <a href="../16.taints%26tolerations-Vs-nodeaffinity/" class="dropdown-item">T&T/NodeAffinity</a>
+</li>
+                                    
+<li>
+    <a href="../17.multi-container-pods/" class="dropdown-item">MultiContainer pod</a>
+</li>
+                                    
+<li>
+    <a href="../18.readiness-liveness/" class="dropdown-item">Readiness-Liveliness</a>
+</li>
+                                    
+<li>
+    <a href="../19.container-logging/" class="dropdown-item">Logging</a>
+</li>
+                                    
+<li>
+    <a href="../20.monitoring/" class="dropdown-item">Monitoring</a>
+</li>
+                                    
+<li>
+    <a href="../21.labels-selectors-annotations/" class="dropdown-item">Selectors</a>
+</li>
+                                    
+<li>
+    <a href="../22.updates-rollbacks/" class="dropdown-item">Upgrades-Rollbacks</a>
+</li>
+                                    
+<li>
+    <a href="../23.jobs/" class="dropdown-item">Jobs</a>
+</li>
+                                    
+<li>
+    <a href="../24.services/" class="dropdown-item">Services</a>
+</li>
+                                    
+<li>
+    <a href="../25.Ingress/" class="dropdown-item">Ingress</a>
+</li>
+                                    
+<li>
+    <a href="../26.network-policies/" class="dropdown-item">Network Policy</a>
+</li>
+                                    
+<li>
+    <a href="../27.volumes/" class="dropdown-item">volumes</a>
+</li>
+                                    
+<li>
+    <a href="../28.refernce/" class="dropdown-item">Points</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../KodeKloud-Kubernetes%2B-CKAD.pdf" class="dropdown-item">Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../14.taints-tolerations/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../16.taints%26tolerations-Vs-nodeaffinity/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/BhavyaSree/kubernetes-CKAD/edit/master/docs/15.node-selectors-affinity.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#node-selectors" class="nav-link">Node Selectors</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#limitations" class="nav-link">Limitations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#node-affinity" class="nav-link">Node Affinity</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#node-affinity-types" class="nav-link">Node Affinity Types</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>Let us start with a simple example,<br />
+We have 3 node cluster of which 2 are smaller nodes with lower hardware resources and one of them is a larger node configured with higher resources.<br />
+We have different kinds of workloads running in the cluster, we would like to dedicate the data processing workloads that require higher horse power to the larger node as that is the only node that will not run out of resources, in case job demands extra resources. <br />
+However, in the current default setup any PODs can go any nodes. Therefore, the POD that requires higher horse power may end up placed on the smaller node.   </p>
+<p>To solve this, we can set limitation on PODs, so that they only run on particular nodes.  </p>
+<p>There are two ways to do this.<br />
+* Node Selectors
+* Node Affinity</p>
+<h2 id="node-selectors">Node Selectors</h2>
+<p><code>pod-definition file</code></p>
+<pre><code class="yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+  - name: data-processor
+    image: data-processor
+  # To limit this pod to run on larger node
+  nodeSelector:
+    size: Large
+    # Large and smalls are the labels assigned to the node, the schedular uses this labels to match and identify the right nodes to place th pods on 
+</code></pre>
+
+<p>We need to label the node before using the labels in nodeSelector of Pod file.  </p>
+<p>To label the node <br />
+<code>kubectl label nodes &lt;node-name&gt; &lt;label-key&gt;=&lt;label-value&gt;</code><br />
+<code>kubectl label nodes node-1 size=Large</code>  </p>
+<p>Now we can create the pod using <code>pod-definition file</code><br />
+<code>kubectl create -f pod-definition.yaml</code>  </p>
+<p>Now when the pod is now created, it is placed on larger node as desired.  </p>
+<p><img alt="node-selector" src="../Screens/node-selector.png" /></p>
+<h2 id="limitations">Limitations</h2>
+<p>We used a single label and selector to achieve our goals, but what if we have some complex requirement. <br />
+For Example: Place the pod on a <code>large or medium</code> node, or something like place the pod on any node that are <code>not small</code>. We cannot achive this using node selector. for this, we use <code>Node Affinity</code>.</p>
+<h2 id="node-affinity">Node Affinity</h2>
+<p>The primary purpose of Node Affinity feature is to ensure that pods are hosted on particular nodes. <br />
+The Node Affinity feature provides us with advanced capabilities to limit pod placement on specific nodes.  </p>
+<p>With great power, comes great complexity. So, the pod-definition file with Node Affinity looks as below.  </p>
+<p><img alt="Node-affinity" src="../Screens/node-affinity.png" /></p>
+<p>As per above screen, both Node selector and Node-Affinity do the same thing, that is placing pod on large node.</p>
+<p><code>For large or medium node</code>   </p>
+<p><img alt="large-medium" src="../Screens/large-medium.png" /></p>
+<p><code>For not in small node</code>  </p>
+<p><img alt="not-small" src="../Screens/not-small.png" /></p>
+<p>If we did not set the size label for small nodes, we can just use exists as below</p>
+<pre><code class="yaml">key: size
+operator: Exists
+</code></pre>
+
+<p>When the pods are created, these rules are considered and the pods are placed on to the right nodes.
+If the node affinity could not match a node with the given expression, that is if we dont have any node with label size, then these can be handled by type affinity.</p>
+<h2 id="node-affinity-types">Node Affinity Types</h2>
+<ul>
+<li>requiredDuringSchedulingIgnoredDuringExecution</li>
+<li>preferredDuringSchedulingIgnoredDuringExecution</li>
+</ul>
+<p><img alt="types" src="../Screens/types.png" /></p>
+<p><img alt="planned" src="../Screens/planned.png" />  </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

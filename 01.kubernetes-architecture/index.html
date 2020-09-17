@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Bhavya Sree Bindela">
+        <link rel="canonical" href="https://bhavyasree.github.io/Kubernetes-CKAD/01.kubernetes-architecture/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Architecture - Kubernetes-CKAD</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/obsidian.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Kubernetes-CKAD</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Getting started</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../02.imperative-commands/" class="dropdown-item">Imperative Commands</a>
+</li>
+                                    
+<li>
+    <a href="../03.formatting-output-with-kubectl/" class="dropdown-item">Output Format</a>
+</li>
+                                    
+<li>
+    <a href="../04.questions-1/" class="dropdown-item">Examples</a>
+</li>
+                                    
+<li>
+    <a href="../05.configuration-commands/" class="dropdown-item">Commands</a>
+</li>
+                                    
+<li>
+    <a href="../06.edit-pods-deploys/" class="dropdown-item">Edit POD & Deploy</a>
+</li>
+                                    
+<li>
+    <a href="../07.configuration-env/" class="dropdown-item">Env variables</a>
+</li>
+                                    
+<li>
+    <a href="../08.configMaps/" class="dropdown-item">ConfigMap</a>
+</li>
+                                    
+<li>
+    <a href="../09.secrets/" class="dropdown-item">Secret</a>
+</li>
+                                    
+<li>
+    <a href="../10.security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../11.kubernetes-security/" class="dropdown-item">K8-Security</a>
+</li>
+                                    
+<li>
+    <a href="../12.service-account/" class="dropdown-item">Service Account</a>
+</li>
+                                    
+<li>
+    <a href="../13.resource-requirements/" class="dropdown-item">Resources</a>
+</li>
+                                    
+<li>
+    <a href="../14.taints-tolerations/" class="dropdown-item">Taints & Tolerations</a>
+</li>
+                                    
+<li>
+    <a href="../15.node-selectors-affinity/" class="dropdown-item">NodeSelectors & Affinity</a>
+</li>
+                                    
+<li>
+    <a href="../16.taints%26tolerations-Vs-nodeaffinity/" class="dropdown-item">T&T/NodeAffinity</a>
+</li>
+                                    
+<li>
+    <a href="../17.multi-container-pods/" class="dropdown-item">MultiContainer pod</a>
+</li>
+                                    
+<li>
+    <a href="../18.readiness-liveness/" class="dropdown-item">Readiness-Liveliness</a>
+</li>
+                                    
+<li>
+    <a href="../19.container-logging/" class="dropdown-item">Logging</a>
+</li>
+                                    
+<li>
+    <a href="../20.monitoring/" class="dropdown-item">Monitoring</a>
+</li>
+                                    
+<li>
+    <a href="../21.labels-selectors-annotations/" class="dropdown-item">Selectors</a>
+</li>
+                                    
+<li>
+    <a href="../22.updates-rollbacks/" class="dropdown-item">Upgrades-Rollbacks</a>
+</li>
+                                    
+<li>
+    <a href="../23.jobs/" class="dropdown-item">Jobs</a>
+</li>
+                                    
+<li>
+    <a href="../24.services/" class="dropdown-item">Services</a>
+</li>
+                                    
+<li>
+    <a href="../25.Ingress/" class="dropdown-item">Ingress</a>
+</li>
+                                    
+<li>
+    <a href="../26.network-policies/" class="dropdown-item">Network Policy</a>
+</li>
+                                    
+<li>
+    <a href="../27.volumes/" class="dropdown-item">volumes</a>
+</li>
+                                    
+<li>
+    <a href="../28.refernce/" class="dropdown-item">Points</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../KodeKloud-Kubernetes%2B-CKAD.pdf" class="dropdown-item">Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../02.imperative-commands/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/BhavyaSree/kubernetes-CKAD/edit/master/docs/01.kubernetes-architecture.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#node" class="nav-link">Node</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#cluster" class="nav-link">Cluster</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#master" class="nav-link">Master</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#components" class="nav-link">Components</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#master-vs-worker-nodes" class="nav-link">Master vs Worker Nodes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#kubectl" class="nav-link">Kubectl</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#pods" class="nav-link">PODs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#pods-with-yaml" class="nav-link">PODs with YAML</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#replication-controller" class="nav-link">Replication Controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#replica-set" class="nav-link">Replica set</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#deployments" class="nav-link">Deployments</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#namespaces" class="nav-link">Namespaces</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="node">Node</h2>
+<p>Node is a physical machine or virtual machine on which kubernetes is installed.<br />
+A node is a worker machine(minions), where containers are launched by kubernetes.<br />
+We need to have more than one node, inorder to maintain the application if one node fails.  </p>
+<h2 id="cluster">Cluster</h2>
+<p>A cluster is a set of nodes grouped together. If one node fails, our application will be still accessible from other nodes. <br />
+Having multiple nodes help in sharing load as well.  </p>
+<h2 id="master">Master</h2>
+<p>A master is other node with kubernetes installed in it and is configured as a master.<br />
+The master watches over the nodes in the cluster and is reponsible for the actual orchestration of containers on the worker nodes.<br />
+Master node manages the cluster, this will have information about the members of the cluster, this monitor the nodes and when a node fails, this will move the load of the failed node to other worker nodes.  </p>
+<h2 id="components">Components</h2>
+<p>When we install the kubernetes in the system, we are actually installing the following components.</p>
+<ul>
+<li><code>API Server</code> -- frontend for kubernetes. Users, management devices, CLI all talk to the apiServer to interact with kubernetes cluster.  </li>
+<li><code>etcd</code> -- key-value store (to store all data (in distributed manner) to manage cluster)   </li>
+<li><code>kubelet</code> -- agent that runs on each node on the cluster and make sure that containers are running as expected.   </li>
+<li><code>Container Runtime</code> -- used to run containers i.e., docker  </li>
+<li><code>Controller</code> -- brain behind otchestration, responsible for noticing and managing when nodes, containers, endpoints goes down.   </li>
+<li><code>scheduler</code> -- distributes work to all containers across multiple nodes.   </li>
+</ul>
+<h2 id="master-vs-worker-nodes">Master vs Worker Nodes</h2>
+<ul>
+<li>Worker Node or Minion is where the containers are hosted. To run containers on the system, we need container runtime installed. Therefore, worker nodes will have container runtime (docker).</li>
+<li>Master node will have Kube-API server and thats make it a master.</li>
+<li>Worker node will have kubelet agent that is responsible to interact with the master to provide health information of the worker node and to carry out actions requested by the master on the worker nodes.</li>
+<li>All the information gathered is stored in the key-value store on the master. The key-value store is based on the popular etcd framework.</li>
+<li>The master also has Controller and Scheduler.</li>
+</ul>
+<p><img alt="master-worker" src="../Screens/master-worker.png" /></p>
+<h2 id="kubectl">Kubectl</h2>
+<p>Kubectl tool is used to deploy and manage application on kubernetes cluster like to get the cluster information, to get status of nodes and to manage many other things.</p>
+<p><code>kubectl run hello-minikube</code><br />
+kubetcl command is to deploy application on the cluster.  </p>
+<p><code>kubectl cluster-info</code><br />
+To view information about the cluster.  </p>
+<p><code>kubectl get nodes</code> <br />
+To list all the nodes of the cluster.</p>
+<h2 id="pods">PODs</h2>
+<p>With Kubernetes, our ultimate aim is to deploy application in the form of containers on set of machines that are configured as worker nodes in a cluster.  <br />
+However, kubernetes does not deploy containers directly on the worker node. The container is encapsulated into kubernetes object known as POD.  <br />
+A POD is a single instance of an application. A POD is the smallest object that we can create in kubernetes.</p>
+<p><img alt="pod" src="../Screens/pod.png" /></p>
+<p>PODs usually have a one to one relationship with containers running the application. <br />
+To scale up, we create new POD. To scale down, we delete existing POD.  We do not add containers to existing POD to scale our application.  </p>
+<h3 id="multi-container-pods">Multi-Container PODs</h3>
+<p>Though PODs have a one to one relationship with containers, we are not restricted to this.<br />
+A single POD can have multiple container except that containers cannot be of same kind. <br />
+In order to scale up our application, we need to create additional PODs. </p>
+<p><img alt="multi-container pod" src="../Screens/multi-container.png" /></p>
+<h3 id="kubectl-commands-for-pods">Kubectl commands for PODs</h3>
+<p>To get the application image we need to specify the image name.
+<code>kubectl run nginx --image=nginx</code><br />
+In this case nginx image is downloaded from the docker hub repository.
+Here POD name can be anything, but image name should be the image that is available in the docker hub or any container registry.  </p>
+<p><code>kubectl get pods</code> <br />
+To see the list of PODs in our cluster.</p>
+<p><code>kubectl describe pod nginx</code><br />
+To get more information related to the POD</p>
+<p><code>kubectl get pods -o wide</code><br />
+To get the status of the pod with additional information such as node where the pod is running and the IP address of the pod.</p>
+<h2 id="pods-with-yaml">PODs with YAML</h2>
+<p><code>pod-definition.yml</code></p>
+<pre><code class="yaml">apiVersion: v1
+kind: Pod
+metadata: 
+  name: myapp-pod
+  labels: 
+    app: myapp
+    type: front-end
+    # to differentiate the pods later if needed
+spec:
+  containers: 
+  # container is a list/array.
+  # PODs can have multiple containers within them.
+    - name: nginx-container
+      image: nginx
+</code></pre>
+
+<p><code>kubectl create -f pod.definition.yml</code><br />
+With this command, kubernetes create the pod.</p>
+<p><code>kubectl delete pod &lt;pod name&gt;</code> <br />
+To delete a particular pod.</p>
+<p>If you are not given a pod definition file, you may extract the definition to a file using the below command</p>
+<p><code>kubectl get pod &lt;pod-name&gt; -o yaml &gt; pod-definition.yaml</code>   </p>
+<p>Use the <code>kubectl edit pod &lt;pod-name&gt;</code> command to edit pod properties.  </p>
+<h2 id="replication-controller">Replication Controller</h2>
+<p><code>rc-definition.yml</code></p>
+<pre><code class="yaml">apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myapp-rc
+  labels:
+    app: myapp
+    type: front-end
+spec:
+    # template section to provide a pod template to be used by the replication controller to create replicas.
+  template:
+    metadata:
+      name: myapp-prod
+      labels: 
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx
+
+  replicas: 3
+</code></pre>
+
+<h2 id="replica-set">Replica set</h2>
+<p>replicaset-definition.yml</p>
+<pre><code class="yaml">apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-replicaset
+  labels:
+    app: myapp
+    type: front-end
+spec:
+  template:
+    metadata:
+      name: myapp-prod
+      labels: 
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx
+
+  replicas: 3
+  # selector section helps replicaset identify what pods fall under it.
+  # We need to mention this (though we have provided pod template) because, replicaset can also manage pods which are not created as part of the replicaset creation.
+  selector: 
+    matchLabels:
+      type: front-end
+</code></pre>
+
+<p>Selector is not required in the case of replication controller(still available, if not provided it assumes it to be the labels provided in the pod definition file), whereas a user input is required of this property in the case of replica set.  </p>
+<p>This is because replica set can also manage PODs that are not created as psrt of the replica set creation.  </p>
+<p><code>kubectl create -f &lt;filename&gt;</code>  <br />
+To create a replica set </p>
+<p><code>kubectl get replicaset</code><br />
+To view the created replicasets</p>
+<h3 id="scale">Scale</h3>
+<p>We started with 3 replicas and in future we decide to scale to 6. There are multiple ways to do this
+1. update the number of replicas in the definition file to 6.
+  <code>kubectl replace -f replicaset-definition.yml</code><br />
+  This will update the replicaset to have 6 replicas
+2. <code>kubectl scale --replicas=6 -f replicaset-definition.yml</code> or
+   <code>kubectl scale --replicas=6 replicaset myapp-replicaset</code> (type, name format, this won't change the number of replicas in the file).</p>
+<h2 id="deployments">Deployments</h2>
+<p>To create a deployment we first create a deployment definition yaml file.
+The contents of deployment definition file will be similar to the replicaset definition file, except the kind, which will be deployment.  </p>
+<p><code>kubectl create -f &lt;deployment definition file&gt;</code><br />
+To create the deployment.  </p>
+<p><code>kubectl get deployments</code><br />
+To view the created deployments. 
+The deployment automatically creates replicaset. </p>
+<p><code>kubectl describe deployment &lt;deploymnet name&gt;</code><br />
+To get more information about the particular deployment.</p>
+<p><code>kubectl get all</code><br />
+To view all the objects created in the kuberntes cluster.</p>
+<h3 id="rollout-and-versioning">Rollout and Versioning</h3>
+<p><code>kubectl rollout history &lt;deployment name&gt;</code> <br />
+To view the revisions and history of deployment.  </p>
+<h2 id="namespaces">Namespaces</h2>
+<p>Whatever we create(pods, deployments) in kubernetes cluster, we will be doing inside a namespace. This namespace is called <code>default</code> namespace and it is automatically created by kubernetes when the cluster is first set up.<br />
+Kubernetes creates a set of pods and services for internal purpose such as those required by networking solutions, DNS service etc,. To isolate these from the user and to prevent the users by accidentally delete or modify these objects, kubernetes creates them at another namespace created at startup named <code>kube-system</code>. <br />
+Kubernetes also creates one more namespace automaticcaly and that is called <code>kube-public</code>, where resources available to all users are created.  </p>
+<p>We can create our own namespaces as well.<br />
+Each of the namespaces can have their own set of policies to define what to do.<br />
+We can also assign quota of resources to each of the namespaces. In this way, each namespace is guaranteed a certain amount and does not use more than its allowed limit.  </p>
+<p><img alt="namespace" src="../Screens/namespace.png" /></p>
+<p><img alt="connect" src="../Screens/connect.png" /></p>
+<h3 id="kubectl-commands">kubectl commands</h3>
+<p><code>kubectl get pods</code> <br />
+This command lists the pods in the default namespace.  </p>
+<p><code>kubectl get pods --namespace=kube-system</code> <br />
+This command lists the pods of the kube-system namespace.  </p>
+<p><code>kubectl create -f pod-definition.yaml</code><br />
+This command creates the pod in the default namespace.  </p>
+<p>To create the pod in other namespace, use the namespace option.<br />
+<code>kubectl create -f pod-definition.yaml --namespace=dev</code><br />
+If we want this pod to be created always in the dev namespace, We can specify the namespace option in yaml file under metadata(<code>namespace: dev</code>) instead of giving it in the command file.</p>
+<h4 id="to-create-a-namespace">To create a namespace</h4>
+<p><code>namespace-dev.yaml</code></p>
+<pre><code class="yaml">apiVersion: v1
+kind: Namespace
+metadata:
+    name: dev
+</code></pre>
+
+<p><code>kubectl create -f namespace-dev.yaml</code> <br />
+This command creates a namespace using yaml file.</p>
+<p>We can simply create the namespace as below command<br />
+<code>kubectl create namespace dev</code>   </p>
+<p>To switch to dev(another namespace) permanently, so that we dont have to specify the namespace option anymore.
+<code>kubectl config set-context $(kubectl config current-context) --namespace=dev</code>  </p>
+<p><code>kubectl get pods</code>
+Now, this command lists the pods of dev namespace.  </p>
+<p><code>kubectl get pods --namespace=default</code> <br />
+To list the pods from the default namespace.</p>
+<p>To view pods in all namespaces.<br />
+<code>kubectl get pods --all-namespaces</code><br />
+This will list all the pods in all the namespaces.  </p>
+<h3 id="resource-quota">Resource Quota</h3>
+<p>To limit resources in a namespace, create a resource quota. </p>
+<p><code>compute-quota.yaml</code></p>
+<pre><code class="yaml">apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: dev
+spec:
+  hard:
+    pods: &quot;10&quot;
+    requests.cpu: &quot;4&quot;
+    requests.memory: 5Gi
+    limits.cpu: &quot;10&quot;
+    limits.memory: &quot;10Gi
+</code></pre>
+
+<p>To create a resource quota <br />
+<code>kubectl create -f compute-quota.yaml</code>   </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

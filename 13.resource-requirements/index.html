@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Bhavya Sree Bindela">
+        <link rel="canonical" href="https://bhavyasree.github.io/Kubernetes-CKAD/13.resource-requirements/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Resources - Kubernetes-CKAD</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/obsidian.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Kubernetes-CKAD</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Getting started</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01.kubernetes-architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../02.imperative-commands/" class="dropdown-item">Imperative Commands</a>
+</li>
+                                    
+<li>
+    <a href="../03.formatting-output-with-kubectl/" class="dropdown-item">Output Format</a>
+</li>
+                                    
+<li>
+    <a href="../04.questions-1/" class="dropdown-item">Examples</a>
+</li>
+                                    
+<li>
+    <a href="../05.configuration-commands/" class="dropdown-item">Commands</a>
+</li>
+                                    
+<li>
+    <a href="../06.edit-pods-deploys/" class="dropdown-item">Edit POD & Deploy</a>
+</li>
+                                    
+<li>
+    <a href="../07.configuration-env/" class="dropdown-item">Env variables</a>
+</li>
+                                    
+<li>
+    <a href="../08.configMaps/" class="dropdown-item">ConfigMap</a>
+</li>
+                                    
+<li>
+    <a href="../09.secrets/" class="dropdown-item">Secret</a>
+</li>
+                                    
+<li>
+    <a href="../10.security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../11.kubernetes-security/" class="dropdown-item">K8-Security</a>
+</li>
+                                    
+<li>
+    <a href="../12.service-account/" class="dropdown-item">Service Account</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Resources</a>
+</li>
+                                    
+<li>
+    <a href="../14.taints-tolerations/" class="dropdown-item">Taints & Tolerations</a>
+</li>
+                                    
+<li>
+    <a href="../15.node-selectors-affinity/" class="dropdown-item">NodeSelectors & Affinity</a>
+</li>
+                                    
+<li>
+    <a href="../16.taints%26tolerations-Vs-nodeaffinity/" class="dropdown-item">T&T/NodeAffinity</a>
+</li>
+                                    
+<li>
+    <a href="../17.multi-container-pods/" class="dropdown-item">MultiContainer pod</a>
+</li>
+                                    
+<li>
+    <a href="../18.readiness-liveness/" class="dropdown-item">Readiness-Liveliness</a>
+</li>
+                                    
+<li>
+    <a href="../19.container-logging/" class="dropdown-item">Logging</a>
+</li>
+                                    
+<li>
+    <a href="../20.monitoring/" class="dropdown-item">Monitoring</a>
+</li>
+                                    
+<li>
+    <a href="../21.labels-selectors-annotations/" class="dropdown-item">Selectors</a>
+</li>
+                                    
+<li>
+    <a href="../22.updates-rollbacks/" class="dropdown-item">Upgrades-Rollbacks</a>
+</li>
+                                    
+<li>
+    <a href="../23.jobs/" class="dropdown-item">Jobs</a>
+</li>
+                                    
+<li>
+    <a href="../24.services/" class="dropdown-item">Services</a>
+</li>
+                                    
+<li>
+    <a href="../25.Ingress/" class="dropdown-item">Ingress</a>
+</li>
+                                    
+<li>
+    <a href="../26.network-policies/" class="dropdown-item">Network Policy</a>
+</li>
+                                    
+<li>
+    <a href="../27.volumes/" class="dropdown-item">volumes</a>
+</li>
+                                    
+<li>
+    <a href="../28.refernce/" class="dropdown-item">Points</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../KodeKloud-Kubernetes%2B-CKAD.pdf" class="dropdown-item">Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../12.service-account/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../14.taints-tolerations/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/BhavyaSree/kubernetes-CKAD/edit/master/docs/13.resource-requirements.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#resource-requirements-for-pod" class="nav-link">Resource Requirements for POD</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#resources-cpu" class="nav-link">Resources - CPU</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>Let us consider a 3-node kubernetes cluster, each node has a set of CPU, memory and disk resources available. A POD consumes a set of resources. Whenever a POD is placed on a node, it consumes resources available to that node. <br />
+Kubernetes scheduler decides to which node the POD goes to. The scheduler takes into consideration, the amount of resources required by a POD and those available on the nodes. <br />
+If the node has no sufficient resources, the scheduler avoids placing the POD on that node instead places the POD on the one where sufficient resources are available.<br />
+If there is no sufficient resources avaialble in any of the nodes, kubernetes holds back scheduling the POD, we will see the POD in <code>pending state</code>, in events we can see reason as <code>insufficient CPU</code>.  </p>
+<h2 id="resource-requirements-for-pod">Resource Requirements for POD</h2>
+<p>By default, kubernetes assumes that a POD or a container inside the POD requires <code>0.5CPU</code> and <code>256 Mebi Byte of memory</code>. This is known as the resource request for a container i.e., the minimum CPU or memory requested by the container. When the schedular tries to place a POD on a node, it uses these numbers to identify a node which has sufficient number of resources available.  </p>
+<p>If we know that our application needs more than these, we can modify these values by specfying them in POD or Deployment definition files.  </p>
+<p>In the simple POD definition file, add a section called resources, under which add requests and specify new values of CPU and memory.</p>
+<p><img alt="resources" src="../Screens/resources.png" /></p>
+<h2 id="resources-cpu">Resources - CPU</h2>
+<p>1 count of CPU - 1 block of CPU.  <br />
+Blocks are used for illustration purpose only, it doesn't have to be in the increment of 0.5. We can specify any value as low as 0.1.<br />
+0.1 CPU can also be expressed as <code>100 m</code> (m stands for milli). We can go as low as 1m but not lower than that.</p>
+<p>1 count of CPU is equivalent to   </p>
+<ul>
+<li>1 vCPU in AWS or</li>
+<li>1 core in GCP or</li>
+<li>1 core in Azure or</li>
+<li>1 Hyperthread  </li>
+</ul>
+<p>We could requests higher number of CPUs for the container, provided that nodes are sufficiently funded.   </p>
+<p>Similarly, with memory, we can specify <code>256Mi</code> or specify the same value as <code>268435456</code> or use other suffix as below</p>
+<p><img alt="memory" src="../Screens/memory.png" />  </p>
+<p>In Docker world, a docker container has no limit to the resources it can consume on a node.<br />
+Lets say, a container starts with 1vCPU on a node, it can go up and consume as much reource as it requires, suffocating the native processes on the node or other containers of resources. However, we can set a limit for the reouces usage on tehse PODs by adding <code>limit</code> section under <code>resources</code> section in pod-definition file(specfying new memory and CPU) as below.</p>
+<p><img alt="limit" src="../Screens/limit.png" /></p>
+<p>When the POD is created, kubernetes sets new limits for the container. <br />
+The limits and requests are set for each container within the POD.  </p>
+<p>When a POD tries to exceed the resources beyond its specified limit, <br />
+<em> In case of CPU, Kubernetes <code>THROTTLE</code> the CPU so that it does not go beyond the specified limit. A container cannot use more CPU resources than its limit.<br />
+</em> In case of memory, a container can use memory resources than its limit. So, if a POD tries to consume more memory than its limit, constantly the POD gets terminated (when its reached maximum node resources).   </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

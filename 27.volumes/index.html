@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Bhavya Sree Bindela">
+        <link rel="canonical" href="https://bhavyasree.github.io/Kubernetes-CKAD/27.volumes/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>volumes - Kubernetes-CKAD</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/obsidian.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Kubernetes-CKAD</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Getting started</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01.kubernetes-architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../02.imperative-commands/" class="dropdown-item">Imperative Commands</a>
+</li>
+                                    
+<li>
+    <a href="../03.formatting-output-with-kubectl/" class="dropdown-item">Output Format</a>
+</li>
+                                    
+<li>
+    <a href="../04.questions-1/" class="dropdown-item">Examples</a>
+</li>
+                                    
+<li>
+    <a href="../05.configuration-commands/" class="dropdown-item">Commands</a>
+</li>
+                                    
+<li>
+    <a href="../06.edit-pods-deploys/" class="dropdown-item">Edit POD & Deploy</a>
+</li>
+                                    
+<li>
+    <a href="../07.configuration-env/" class="dropdown-item">Env variables</a>
+</li>
+                                    
+<li>
+    <a href="../08.configMaps/" class="dropdown-item">ConfigMap</a>
+</li>
+                                    
+<li>
+    <a href="../09.secrets/" class="dropdown-item">Secret</a>
+</li>
+                                    
+<li>
+    <a href="../10.security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../11.kubernetes-security/" class="dropdown-item">K8-Security</a>
+</li>
+                                    
+<li>
+    <a href="../12.service-account/" class="dropdown-item">Service Account</a>
+</li>
+                                    
+<li>
+    <a href="../13.resource-requirements/" class="dropdown-item">Resources</a>
+</li>
+                                    
+<li>
+    <a href="../14.taints-tolerations/" class="dropdown-item">Taints & Tolerations</a>
+</li>
+                                    
+<li>
+    <a href="../15.node-selectors-affinity/" class="dropdown-item">NodeSelectors & Affinity</a>
+</li>
+                                    
+<li>
+    <a href="../16.taints%26tolerations-Vs-nodeaffinity/" class="dropdown-item">T&T/NodeAffinity</a>
+</li>
+                                    
+<li>
+    <a href="../17.multi-container-pods/" class="dropdown-item">MultiContainer pod</a>
+</li>
+                                    
+<li>
+    <a href="../18.readiness-liveness/" class="dropdown-item">Readiness-Liveliness</a>
+</li>
+                                    
+<li>
+    <a href="../19.container-logging/" class="dropdown-item">Logging</a>
+</li>
+                                    
+<li>
+    <a href="../20.monitoring/" class="dropdown-item">Monitoring</a>
+</li>
+                                    
+<li>
+    <a href="../21.labels-selectors-annotations/" class="dropdown-item">Selectors</a>
+</li>
+                                    
+<li>
+    <a href="../22.updates-rollbacks/" class="dropdown-item">Upgrades-Rollbacks</a>
+</li>
+                                    
+<li>
+    <a href="../23.jobs/" class="dropdown-item">Jobs</a>
+</li>
+                                    
+<li>
+    <a href="../24.services/" class="dropdown-item">Services</a>
+</li>
+                                    
+<li>
+    <a href="../25.Ingress/" class="dropdown-item">Ingress</a>
+</li>
+                                    
+<li>
+    <a href="../26.network-policies/" class="dropdown-item">Network Policy</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">volumes</a>
+</li>
+                                    
+<li>
+    <a href="../28.refernce/" class="dropdown-item">Points</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../KodeKloud-Kubernetes%2B-CKAD.pdf" class="dropdown-item">Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../26.network-policies/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../28.refernce/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/BhavyaSree/kubernetes-CKAD/edit/master/docs/27.volumes.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#volumes-in-docker" class="nav-link">Volumes in Docker</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#volumes-in-kubernetes" class="nav-link">Volumes in Kubernetes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#persistent-volumes" class="nav-link">Persistent Volumes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#persistent-volume-claims" class="nav-link">Persistent Volume Claims</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="volumes-in-docker">Volumes in Docker</h2>
+<p>Docker Containers are meant to be transient in nature i.e., they are meant to last only for a short period of time.<br />
+They are called upon when required to process data and destroyed once finished.<br />
+The same is true, for the data within the container. The data is destroyed along with the container.  </p>
+<p>To Persist data processed by the containers, we attach a volume to the containers when they are created. The data processed by the container is now placed in this volume there by retaining it permanently. <br />
+Even if the container is deleted, the data generated or processed by it remains.  </p>
+<h2 id="volumes-in-kubernetes">Volumes in Kubernetes</h2>
+<p>Just as in docker, the PODs created in kubernetes are transient in nature, when a POD is created to process data and then deleted. The data processed by it gets deleted as well. for this, we attach a volume to the POD. <br />
+The data generated by the POD is now stored in the volume and even after the POD is deleted, the data remains. </p>
+<h3 id="implementation">Implementation</h3>
+<p>We have a single node kubernetes cluster. We create a simple POD that generates a random number between 1 and 100 and writes that to a file at /opt/number.out. It then gets deleted along with the random number.  </p>
+<p>To retain the number generated by the POD, we create a volume and a volume needs a storage.<br />
+When we create a volume, we can choose to configure its storage in different ways.<br />
+Now we simple configure it to use a directory on the host.<br />
+This way any files created in the volume, will be stored in the directory data on my node.   </p>
+<p>Once the volume is created, to access it from a container we mount the volume to a directory inside the container.<br />
+We use <code>volumeMounts</code> field in each container to mount the data volume to the directory /opt within the container. </p>
+<p>The random number will now be returned to /opt mount inside the container, which happens to be on the data volume which infact the data directory on the host.  </p>
+<p><img alt="volumes" src="../Screens/volumes.png" /></p>
+<p>When the POD gets deleted, the file with the random number still lives on the host.  </p>
+<h3 id="volume-storage-options">Volume Storage options</h3>
+<p>We can use <code>hostpath</code> option to configure a directory on the host as storage space for the volume. This works fine on a single node.<br />
+This is not recommended to use on multi-node cluster.  </p>
+<p>Volume storage on AWS </p>
+<p><img alt="volume-AWS" src="../Screens/volume-AWS.png" /></p>
+<h2 id="persistent-volumes">Persistent Volumes</h2>
+<p>When we created volumes, we configured volumes within the pod definition file.<br />
+Every configuration information required to configure storage for the volume goes within the pod definition file.  </p>
+<p>When we have large environment, with lot of users deploying a lot of PODs, the users would have to configure storage everytime for each POD. </p>
+<p>To manage storage centrally or configured in a way that an administrator can create a large pool of storage and then have users carve out pieces from it as required.<br />
+This is where persistant volumes can help us..  </p>
+<p>A Persistent volume is a cluster wide pool of storage volumes configured by an adminstrator to be used by users deploying applications on the cluster.  <br />
+The users can now select storage from this pool using persistent volume claims.   </p>
+<p><img alt="per-volume" src="../Screens/per-volumes.png" /></p>
+<p>Accessmode defines how a volume should be mounted on the host whether in a read only mode, read write mode.   </p>
+<p>The supported values are   </p>
+<ul>
+<li>ReadOnlyMany</li>
+<li>ReadWriteOnce</li>
+<li>ReadWriteMany  </li>
+</ul>
+<p>Under capacity, specify the amount of storage to be reserved to this persistent volume.<br />
+next comes the volume type, we use host path for this.  </p>
+<h2 id="persistent-volume-claims">Persistent Volume Claims</h2>
+<p>We create Persistent Volume Claim to make the storage available to a node.  </p>
+<p>Persistent Volumes and Persistent Volume Claims are two separate objects in the kubernetes namespace.  </p>
+<p>An administrator creates a set of persistent volumes and a user creates persistent volume claims to use storage.<br />
+Once the persistent volume claims are created, kubernetes binds the persistent volumes to claims based on the request and properties set on the volume.<br />
+Every persistent volume claim is bound to a single persistent volume. During the binding process, kubernetes tries to find a persistent volume that has sufficient capacity as requested by the claim and any another request property such Acess Modes, Volume Modes, Storage Class etc,.  </p>
+<p>If there are multiple matches for a single claim, and you would like to select a particular volume, we can use labels and selectors to bind to the right volumes.  </p>
+<p>There is a one to one relationship between claims and volumes. So, no other claims can utilize the remaining capacity in the volume.   </p>
+<p>If there are no volumes available, the persistent volume claim will remain in pending state, until the newer volumes are made available to the cluster. Once newer volumes are made available, the claim will automatically bound to the newly available volume.  </p>
+<h3 id="creation">Creation</h3>
+<p><img alt="pvc" src="../Screens/pvc.png" /> </p>
+<p>To get the persistentVolumeClaim <br />
+<code>kubectl get pvc</code>     </p>
+<p>To delete the persistentVolumeClaim <br />
+<code>kubectl delete persistentvolumeclaim &lt;claimname&gt;</code>   </p>
+<p>We can choose what should happen to persistent volume, once pvc gets deleted. <br />
+Bydefault <code>persistentVolumeReclaimPolicy</code> is set to <code>Retain</code> i.e., persistent volume retains until it is manually deleted by the administrator.  It is not available to use by any other claim. <br />
+With <code>Delete</code> option, PV will be deleted as soon as PVC gets deleted.<br />
+With <code>Recycle</code> option, the data in the persistent volume will be scrubbed before making it available to other claims.   </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
