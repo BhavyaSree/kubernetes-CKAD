@@ -8,13 +8,46 @@ repo_url: https://github.com/BhavyaSree/kubernetes-CKAD
 
 copyright: Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.
 
-extends: mkdocs
+# extends: mkdocs
 
 theme:
-    name: flatly
+    name: superhero
 
-
-hljs_style: obsidian
+# hljs_style: obsidian
 
 plugins:
     - search
+
+nav:
+  - Getting started: README.md
+  - Documentation:
+    - Architecture: 01.kubernetes-architecture.md
+    - Imperative Commands: 02.imperative-commands.md
+    - Output Format: 03.formatting-output-with-kubectl.md
+    - Examples: 04.questions-1.md
+    - Commands: 05.configuration-commands.md
+    - Edit POD & Deploy: 06.edit-pods-deploys.md
+    - Env variables: 07.configuration-env.md
+    - ConfigMap: 08.configMaps.md
+    - Secret: 09.secrets.md
+    - Security: 10.security.md
+    - K8-Security: 11.kubernetes-security.md
+    - Service Account: 12.service-account.md
+    - Resources: 13.resource-requirements.md
+    - Taints & Tolerations: 14.taints-tolerations.md
+    - NodeSelectors & Affinity: 15.node-selectors-affinity.md
+    - T&T/NodeAffinity: 16.taints&tolerations-Vs-nodeaffinity.md
+    - MultiContainer pod: 17.multi-container-pods.md
+    - Readiness-Liveliness: 18.readiness-liveness.md
+    - Logging: 19.container-logging.md
+    - Monitoring: 20.monitoring.md
+    - Selectors: 21.labels-selectors-annotations.md
+    - Upgrades-Rollbacks: 22.updates-rollbacks.md
+    - Jobs: 23.jobs.md
+    - Services: 24.services.md
+    - Ingress: 25.Ingress.md
+    - Network Policy: 26.network-policies.md
+    - volumes: 27.volumes.md
+    - Points: 28.refernce.md
+  - Help:
+    - Guide: KodeKloud-Kubernetes+-CKAD.pdf
