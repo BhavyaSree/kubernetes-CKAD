@@ -1,0 +1,20 @@
+# Config options for 'superhero' theme
+site_name: Kubernetes-CKAD
+site_url: https://bhavyasree.github.io/Kubernetes-CKAD/
+site_description: Kubernetes-CKAD
+site_author: Bhavya Sree Bindela
+
+repo_url: https://github.com/BhavyaSree/kubernetes-CKAD
+
+copyright: Copyright &copy; 2020 <a href="https://www.linkedin.com/in/bhavyabindela/">Bhavya Sree Bindela</a>.
+
+extends: mkdocs
+
+theme:
+    name: flatly
+
+
+hljs_style: obsidian
+
+plugins:
+    - search
